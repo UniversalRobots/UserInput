@@ -6,6 +6,6 @@ User Input demonstrates how to work with the virtual on-screen keyboard/keypad a
 Information:
 * Available from:
   * URCap API version 1.3.0.
- * PolyScope version 3.6.0/5.0.4.
+  * PolyScope version 3.6.0/5.0.4.
 
 Main API interfaces: KeyboardInput, InputValidationFactory

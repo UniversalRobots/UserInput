@@ -10,7 +10,6 @@ import com.ur.urcap.api.domain.userinteraction.keyboard.KeyboardInputFactory;
 import com.ur.urcap.api.domain.userinteraction.keyboard.KeyboardNumberInput;
 import com.ur.urcap.api.domain.userinteraction.keyboard.KeyboardTextInput;
 
-import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -20,6 +19,8 @@ public class UserInputInstallationNodeContribution implements InstallationNodeCo
 	private static final String POSITIVE_DOUBLE = "PositiveDouble";
 	private static final String TEXT = "Text";
 	private static final String PASSWORD_KEY = "Password";
+
+	private static final String IP_ADDRESS_DEFAULT = "0.0.0.0";
 
 	private final UserInputInstallationNodeView view;
 	private final DataModel model;
@@ -95,7 +96,7 @@ public class UserInputInstallationNodeContribution implements InstallationNodeCo
 	public KeyboardTextInput getKeyboardForTextField() {
 		KeyboardTextInput keyboardInput = keyboardInputFactory.createStringKeyboardInput();
 		keyboardInput.setInitialValue(model.get(TEXT, ""));
-		keyboardInput.setErrorValidator(validatorFactory.createStringLengthValidator(1, 100));
+		keyboardInput.setErrorValidator(validatorFactory.createStringLengthValidator(1, 15));
 		return keyboardInput;
 	}
 
@@ -151,11 +152,19 @@ public class UserInputInstallationNodeContribution implements InstallationNodeCo
 
 	private String encrypt(String value) {
 		byte[] bytes = messageDigest.digest(value.getBytes());
-		return DatatypeConverter.printBase64Binary(bytes);
+		return convertByteToHex(bytes);
+	}
+
+	private String convertByteToHex(byte[] bytes) {
+		StringBuilder sb = new StringBuilder();
+		for (byte data : bytes) {
+			sb.append(Integer.toString((data & 0xff) + 0x100, 16).substring(1));
+		}
+		return sb.toString();
 	}
 
 	private String getIpAddress() {
-		return model.get(IP_ADDRESS, "");
+		return model.get(IP_ADDRESS, IP_ADDRESS_DEFAULT);
 	}
 
 	private double getPositiveDouble() {

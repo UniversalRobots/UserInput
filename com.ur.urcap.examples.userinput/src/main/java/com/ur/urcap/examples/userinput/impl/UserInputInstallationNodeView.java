@@ -4,8 +4,15 @@ import com.ur.urcap.api.contribution.installation.swing.SwingInstallationNodeVie
 import com.ur.urcap.api.domain.userinteraction.keyboard.KeyboardNumberInput;
 import com.ur.urcap.api.domain.userinteraction.keyboard.KeyboardTextInput;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
@@ -30,6 +37,7 @@ public class UserInputInstallationNodeView implements SwingInstallationNodeView<
 	public void buildUI(JPanel jPanel, final UserInputInstallationNodeContribution installationNode) {
 		jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
 
+		ipAddress.setHorizontalAlignment(JTextField.RIGHT);
 		jPanel.add(createLabelInputField("IP Address: ", ipAddress, new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -39,6 +47,7 @@ public class UserInputInstallationNodeView implements SwingInstallationNodeView<
 		}));
 
 		jPanel.add(createVerticalSpacing());
+		positiveDouble.setHorizontalAlignment(JTextField.RIGHT);
 		jPanel.add(createLabelInputField("Positive number: ", positiveDouble, new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
